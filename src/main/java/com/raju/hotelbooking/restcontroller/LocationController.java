@@ -29,8 +29,11 @@ public class LocationController {
 
     @PostMapping("/save")
     public ResponseEntity<String> saveLocation(
-            @RequestPart Location location,
+//            @RequestPart Location location,
+            @RequestParam String name,
             @RequestParam(value = "image",required = true) MultipartFile file) throws IOException {
+        Location location = new Location();
+        location.setName(name);
         locationService.saveLocation(location,file);
 
         return new ResponseEntity<>("Location save successfully", HttpStatus.CREATED);
