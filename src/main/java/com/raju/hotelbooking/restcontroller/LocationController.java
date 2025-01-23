@@ -51,8 +51,12 @@ public class LocationController {
     }
 
     @PutMapping("update/{id}")
-    public ResponseEntity<Location> updateLocation(@PathVariable int id,@RequestBody Location location){
-        Location updateLocation = locationService.updateLocation(id,location);
+    public ResponseEntity<Location> updateLocation(
+            @PathVariable int id,
+            @RequestPart Location location,
+            @RequestParam(value = "image",required = true) MultipartFile file
+           ) throws IOException {
+        Location updateLocation = locationService.updateLocation(id,location,file);
 
         return ResponseEntity.ok(updateLocation);
     }

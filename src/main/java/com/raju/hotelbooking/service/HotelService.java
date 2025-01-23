@@ -57,7 +57,7 @@ public class HotelService {
                 .orElseThrow(()->new EntityNotFoundException("Hotel not found with name: " +name));
     }
 
-    public void updateHotel(int id,Hotel hotel, MultipartFile image) throws IOException {
+    public Hotel updateHotel(int id, Hotel hotel, MultipartFile image) throws IOException {
 
         Hotel existingHotel = hotelRepository.findById(id)
                 .orElseThrow(()->new EntityNotFoundException("Hotel not found with Id: " +id));
@@ -66,7 +66,7 @@ public class HotelService {
         existingHotel.setAddress((hotel.getAddress()));
         existingHotel.setRating(hotel.getRating());
         existingHotel.setMaximumPrice(hotel.getMaximumPrice());
-        existingHotel.setMinimumPrice(hotel.getMaximumPrice());
+        existingHotel.setMinimumPrice(hotel.getMinimumPrice());
 
         // update location
         Location location = locationRepository.findById(hotel.getLocation().getId())
@@ -80,10 +80,19 @@ public class HotelService {
             existingHotel.setImage(fileName);
         }
 
+
+        return hotelRepository.save(existingHotel);
     }
 
     public List<Hotel> findHotelByLocationName(String locationName){
         return hotelRepository.findHotelByLocationName(locationName);
+    }
+
+    public  void deleteHotel(int id){
+        if( ! hotelRepository.existsById(id)){
+            throw new EntityNotFoundException("Hotel not found with Id: "+id);
+        }
+        hotelRepository.deleteById(id);
     }
 
 
