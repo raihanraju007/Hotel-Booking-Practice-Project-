@@ -24,7 +24,7 @@ public class HotelController {
     private HotelService hotelService;
 
     @GetMapping("/")
-    public ResponseEntity<List<Hotel>> getAllHotels(){
+    public ResponseEntity<List<Hotel>> getAllHotels() {
         List<Hotel> hotels = hotelService.getAllHotels();
 
         return ResponseEntity.ok(hotels);
@@ -32,21 +32,20 @@ public class HotelController {
 
 
     @PostMapping("/save")
-    public ResponseEntity<Map <String, String>> saveHotel(
+    public ResponseEntity<Map<String, String>> saveHotel(
             @RequestPart(value = "hotel") String hotelJson,
-            @RequestParam(value = "image")MultipartFile file
+            @RequestParam(value = "image") MultipartFile file
     ) throws JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
-        Hotel hotel = objectMapper.readValue(hotelJson,Hotel.class);
-        try{
+        Hotel hotel = objectMapper.readValue(hotelJson, Hotel.class);
+        try {
 
             Map<String, String> response = new HashMap<>();
             response.put("Message", "Hotel Add Successfully");
-            hotelService.saveHotel(hotel,file);
+            hotelService.saveHotel(hotel, file);
 
             return new ResponseEntity<>(response, HttpStatus.OK);
-        }
-        catch (Exception exception){
+        } catch (Exception exception) {
             Map<String, String> errorResponse = new HashMap<>();
             errorResponse.put("Message", "Hotel Add Failed");
             return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -54,20 +53,19 @@ public class HotelController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Hotel> findHotelById(@PathVariable int id){
-        try{
+    public ResponseEntity<Hotel> findHotelById(@PathVariable int id) {
+        try {
             Hotel hotel = hotelService.findHotelById(id);
             return ResponseEntity.ok(hotel);
-        }
-        catch (RuntimeException exception){
+        } catch (RuntimeException exception) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
     }
 
     @GetMapping("/h/search_hotel")
-    public ResponseEntity<List<Hotel>>findHotelByLocationName(
+    public ResponseEntity<List<Hotel>> findHotelByLocationName(
             @RequestParam(value = "locationName"
-            ) String locationName){
+            ) String locationName) {
 
         List<Hotel> hotels = hotelService.findHotelByLocationName(locationName);
 
@@ -75,9 +73,9 @@ public class HotelController {
     }
 
     @GetMapping("/h/search_hotel_name")
-    public ResponseEntity<Hotel>findHotelByName(
+    public ResponseEntity<Hotel> findHotelByName(
             @RequestParam(value = "name"
-            ) String name){
+            ) String name) {
 
         Hotel hotel = hotelService.findHotelByName(name);
 
@@ -85,13 +83,12 @@ public class HotelController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<String> deleteHotel(@PathVariable int id){
-        try{
+    public ResponseEntity<String> deleteHotel(@PathVariable int id) {
+        try {
             hotelService.deleteHotel(id);
-            return ResponseEntity.ok("Hotel with ID "+id+ " has been deleted");
-        }
-        catch (EntityNotFoundException message){
-            return  ResponseEntity.status(HttpStatus.NOT_FOUND).body(message.getMessage());
+            return ResponseEntity.ok("Hotel with ID " + id + " has been deleted");
+        } catch (EntityNotFoundException message) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(message.getMessage());
         }
     }
 
@@ -99,9 +96,9 @@ public class HotelController {
     public ResponseEntity<Hotel> updateHotel(
             @PathVariable int id,
             @RequestPart Hotel hotel,
-            @RequestParam(value = "image",required = true) MultipartFile file
+            @RequestParam(value = "image", required = true) MultipartFile file
     ) throws IOException {
-        Hotel updateHotel = hotelService.updateHotel(id,hotel,file);
+        Hotel updateHotel = hotelService.updateHotel(id, hotel, file);
 
         return ResponseEntity.ok(updateHotel);
     }

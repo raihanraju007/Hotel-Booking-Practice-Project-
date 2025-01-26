@@ -70,6 +70,7 @@ public class LocationService {
     }
 
     public void updateLocation(Location location){
+
         locationRepository.save(location);
     }
 

@@ -20,7 +20,7 @@ public class LocationController {
     private LocationService locationService;
 
     @GetMapping("/")
-    public ResponseEntity<List<Location>> getAllLocations(){
+    public ResponseEntity<List<Location>> getAllLocations() {
 
         List<Location> locationList = locationService.getAllLocations();
 
@@ -31,22 +31,21 @@ public class LocationController {
     public ResponseEntity<String> saveLocation(
 //            @RequestPart Location location,
             @RequestParam String name,
-            @RequestParam(value = "image",required = true) MultipartFile file) throws IOException {
+            @RequestParam(value = "image", required = true) MultipartFile file) throws IOException {
         Location location = new Location();
         location.setName(name);
-        locationService.saveLocation(location,file);
+        locationService.saveLocation(location, file);
 
         return new ResponseEntity<>("Location save successfully", HttpStatus.CREATED);
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<String> deleteLocation(@PathVariable int id){
-        try{
+    public ResponseEntity<String> deleteLocation(@PathVariable int id) {
+        try {
             locationService.deleteLocation(id);
-            return ResponseEntity.ok("Location with ID "+id+ " has been deleted");
-        }
-        catch (EntityNotFoundException message){
-            return  ResponseEntity.status(HttpStatus.NOT_FOUND).body(message.getMessage());
+            return ResponseEntity.ok("Location with ID " + id + " has been deleted");
+        } catch (EntityNotFoundException message) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(message.getMessage());
         }
     }
 
@@ -54,13 +53,12 @@ public class LocationController {
     public ResponseEntity<Location> updateLocation(
             @PathVariable int id,
             @RequestPart Location location,
-            @RequestParam(value = "image",required = true) MultipartFile file
-           ) throws IOException {
-        Location updateLocation = locationService.updateLocation(id,location,file);
+            @RequestParam(value = "image", required = true) MultipartFile file
+    ) throws IOException {
+        Location updateLocation = locationService.updateLocation(id, location, file);
 
         return ResponseEntity.ok(updateLocation);
     }
-
 
 
 }
