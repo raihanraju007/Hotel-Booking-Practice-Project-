@@ -19,6 +19,7 @@ public class Room {
     @JoinColumn(name = "hotelId")
     private Hotel hotel;
 
+
     public Room() {
     }
 

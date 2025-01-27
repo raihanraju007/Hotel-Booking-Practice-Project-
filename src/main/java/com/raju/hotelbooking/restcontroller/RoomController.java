@@ -31,15 +31,21 @@ public class RoomController {
     @PostMapping("/save")
     public ResponseEntity<String> saveRoom(
             @RequestPart Room room,
-//            @RequestParam String name,
             @RequestParam(value = "image", required = true) MultipartFile file) throws IOException {
-//        Location location = new Location();
-//        location.setName(name);
-//        locationService.saveLocation(location,file);
-
         roomService.saveRoom(room, file);
         return new ResponseEntity<>("Room save successfully", HttpStatus.CREATED);
     }
+
+//    @PostMapping("/save")
+//    public ResponseEntity<String> saveRoom(
+//            @RequestPart("room") Room room,
+//            @RequestParam("image") MultipartFile file) throws IOException {
+//
+//        roomService.saveRoom(room, file);  // Save room along with the file
+//        return new ResponseEntity<>("Room saved successfully", HttpStatus.CREATED);
+//    }
+
+
 
     @GetMapping("/{id}")
     public ResponseEntity<Room> findRoomById(@PathVariable int id) {

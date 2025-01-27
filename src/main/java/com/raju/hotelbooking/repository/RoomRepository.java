@@ -12,9 +12,9 @@ import java.util.List;
 @Repository
 public interface RoomRepository extends JpaRepository<Room, Integer> {
 
-    @Query("Select r from Room where r.hotel.name=:hotelName")
-    public List<Room>findRoomByHotelName(@Param("hotelName") String hotelName);
+    @Query("Select r from Room r where r.hotel.name=:hotelName")
+    List<Room> findRoomByHotelName(@Param("hotelName") String hotelName);
 
-    @Query("Select r from Room where r.hotel.id=:hotelId")
-    public List<Room>findRoomByHotelId(@Param("hotelId") int hotelId);
+    @Query("Select r from Room r where r.hotel.id=:hotelId")
+    List<Room> findRoomByHotelId(@Param("hotelId") int hotelId);
 }
