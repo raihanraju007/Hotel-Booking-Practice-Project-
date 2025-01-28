@@ -36,17 +36,6 @@ public class RoomController {
         return new ResponseEntity<>("Room save successfully", HttpStatus.CREATED);
     }
 
-//    @PostMapping("/save")
-//    public ResponseEntity<String> saveRoom(
-//            @RequestPart("room") Room room,
-//            @RequestParam("image") MultipartFile file) throws IOException {
-//
-//        roomService.saveRoom(room, file);  // Save room along with the file
-//        return new ResponseEntity<>("Room saved successfully", HttpStatus.CREATED);
-//    }
-
-
-
     @GetMapping("/{id}")
     public ResponseEntity<Room> findRoomById(@PathVariable int id) {
         try {
