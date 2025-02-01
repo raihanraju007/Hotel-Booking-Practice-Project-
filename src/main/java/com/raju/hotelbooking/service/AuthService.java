@@ -81,11 +81,11 @@ public class AuthService {
     }
 
     private void sendActivationEmail(User user) {
-        String activationLink = "http://localhost:8080/active" + user.getId();
+        String activationLink = "http://localhost:8080/active/" + user.getId();
         String mailText = " <h2> Dear </h2>" + user.getName() + ","
                 + "<p> Please click on the following link to conform your registration</p>"
                 + "<a href=\"" + activationLink + "\">Active Account</a>";
-        String subject = "Conformed Registration";
+        String subject = "Confirmation Registration";
 
         try {
             emailService.sendSimpleEmail(user.getEmail(), subject, mailText);
